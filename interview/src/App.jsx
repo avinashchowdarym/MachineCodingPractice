@@ -9,6 +9,7 @@ function App() {
   return (
    <div>
       <FileView data = {dataEarth}/>
+      
    </div>
   )
 }

@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 type FormData = {
@@ -28,6 +28,7 @@ function App() {
 }
 
 export const CustomForm = () => {
+  
 
   const [step,setStep] = useState(1);
   const [formData , setFormData] = useState<FormData>({
@@ -56,18 +57,23 @@ export const CustomForm = () => {
         newErrors.phone = 'Invalid Phone Format'
       }
     }
-    else if (step === 2) {
+    if (step === 2) {
       if (formData.password.length < 8 || !/[A-Z]/.test(formData.password) || !/[a-z]/.test(formData.password) || !/[0-9]/.test(formData.password) || !/[!@#$%^&*]/.test(formData.password)) {
         newErrors.password = "Password must be 8+ characters with uppercase, lowercase, number, and special character";
       }
       if (!formData.securityQuestion) newErrors.securityQuestion = "Security question is required";
-    } else if (step === 3) {
+    } 
+    if (step === 3) {
       if (!formData.incomeRange) newErrors.incomeRange = "Income range is required";
       if (!formData.employmentStatus) newErrors.employmentStatus = "Employment status is required";
     }
     setErrors(newErrors);
-    return errors.length === 0 ;
+    return Object.keys(newErrors).length === 0;
+    
   }
+  useEffect(()=>{
+    validateStep();
+  },[errors,formData])
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -146,8 +152,8 @@ export const CustomForm = () => {
         </fieldset>
       )}
       <div className='flex justify-between mt-4'>
-        {step > 1 && <button className='border-1 bg-white text-gray-950 p-2' onClick={()=>handlePrev()}>Prev</button>}
-        {step<3 ? <button className='border-1 bg-white text-gray-950 p-2' onClick={handleNext}>Next</button> : <button className='border-1 bg-white text-gray-950 p-2' type='submit'>Submit</button>}
+        {step > 1 ? <button className='border-1 rounded bg-white text-gray-950 p-2' onClick={()=>handlePrev()}>Prev</button> : <></>}
+        {step<3 ? <button className='border-1 rounded bg-white text-gray-950 p-2' onClick={handleNext}>Next</button> : <button className='border-1 rounded bg-white text-gray-950 p-2' type='submit'>Submit</button>}
       </div>
 
     </form>
