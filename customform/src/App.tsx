@@ -43,7 +43,56 @@ export const CustomForm = () => {
 
   const [errors,setErrors] = useState<{[key: string] : string}>({});
 
-  const validateStep = (): boolean => {
+  // const validateStep = (): boolean => {
+  //   let newErrors : {[key: string] : string} = {};
+
+  //   if(step === 1){
+  //     if(!formData.name){
+  //       newErrors.name = 'Name is Required';
+  //     }
+  //     if(!EmailRegex.test(formData.email)){
+  //       newErrors.email = 'Invalid Email Format'
+  //     }
+  //     if(!PhoneRegex.test(formData.phone)){
+  //       newErrors.phone = 'Invalid Phone Format'
+  //     }
+  //   }
+  //   if (step === 2) {
+  //     if (formData.password.length < 8 || !/[A-Z]/.test(formData.password) || !/[a-z]/.test(formData.password) || !/[0-9]/.test(formData.password) || !/[!@#$%^&*]/.test(formData.password)) {
+  //       newErrors.password = "Password must be 8+ characters with uppercase, lowercase, number, and special character";
+  //     }
+  //     if (!formData.securityQuestion) newErrors.securityQuestion = "Security question is required";
+  //   } 
+  //   if (step === 3) {
+  //     if (!formData.incomeRange) newErrors.incomeRange = "Income range is required";
+  //     if (!formData.employmentStatus) newErrors.employmentStatus = "Employment status is required";
+  //   }
+  //   setErrors(newErrors);
+  //   return Object.keys(errors).length === 0;
+    
+  // }
+  // useEffect(()=>{
+  //   validateStep();
+  // },[errors,formData])
+
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+      setErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+      if (value.trim() !== "") {
+        delete updatedErrors[name];
+      }
+      return updatedErrors;
+    });
+  }
+  console.log(formData);
+  const handlePrev = () => {
+    setStep(prev => prev-1);
+  }
+
+  const handleNext = () => {
     let newErrors : {[key: string] : string} = {};
 
     if(step === 1){
@@ -68,32 +117,8 @@ export const CustomForm = () => {
       if (!formData.employmentStatus) newErrors.employmentStatus = "Employment status is required";
     }
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-    
-  }
-  useEffect(()=>{
-    validateStep();
-  },[errors,formData])
-
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-      setErrors((prevErrors) => {
-      const updatedErrors = { ...prevErrors };
-      if (value.trim() !== "") {
-        delete updatedErrors[name];
-      }
-      return updatedErrors;
-    });
-  }
-  console.log(formData);
-  const handlePrev = () => {
-    setStep(prev => prev-1);
-  }
-
-  const handleNext = () => {
-    if(validateStep()) setStep(prev => prev+1);
+    if(Object.keys(newErrors).length === 0) setStep(prev => prev+1);
+    // else setStep(step);
 }
 
 
@@ -152,8 +177,8 @@ export const CustomForm = () => {
         </fieldset>
       )}
       <div className='flex justify-between mt-4'>
-        {step > 1 ? <button className='border-1 rounded bg-white text-gray-950 p-2' onClick={()=>handlePrev()}>Prev</button> : <></>}
-        {step<3 ? <button className='border-1 rounded bg-white text-gray-950 p-2' onClick={handleNext}>Next</button> : <button className='border-1 rounded bg-white text-gray-950 p-2' type='submit'>Submit</button>}
+        {step > 1 ? <button className='border-1 rounded bg-white text-gray-950 p-2' onClick={(e)=>{e.preventDefault() ; handlePrev()}}>Prev</button> : <></>}
+        {step<3 ? <button className='border-1 rounded bg-white text-gray-950 p-2' onClick={(e)=>{e.preventDefault(); handleNext()}}>Next</button> : <button className='border-1 rounded bg-white text-gray-950 p-2' >Submit</button>}
       </div>
 
     </form>

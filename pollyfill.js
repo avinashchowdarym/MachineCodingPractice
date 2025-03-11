@@ -56,44 +56,55 @@
 //     },1000)
 // });
 
-// let promises = [promise1,promise2,promise3];
+// // let promises = [promise1,promise2,promise3];
 
-// const series =  (promises) => {
-//     try{
+// // const series =  (promises) => {
+// //     try{
         
-//     }catch{
+// //     }catch{
 
-//     }
+// //     }
+// // }
+
+// // network requests
+
+// // securities
+
+// // webpack bundlers how does it identify perofamances
+// function sum(a,b,c){
+//     return a+b+c;
 // }
 
-// network requests
+// function memoize(fn) {
+//     // write your solution here
+//     let cache = {};
+//     return (...args)=> {
+//       const key = JSON.stringify(args);
+//       if(key in cache){
+//         console.log('cache ')
+//         return cache[key];
+//       }
+//       else{
+//         const result = fn.apply(this, args);
+//         console.log('function called')
+//         cache[key] = result;
+//         return result;
+//       }
+//     }
+// }
+// const memoizedSum = memoize(sum); 
 
-// securities
+// console.log(memoizedSum(1,2,3));
+// console.log(memoizedSum(1,2,3));
 
-// webpack bundlers how does it identify perofamances
-function sum(a,b,c){
-    return a+b+c;
-}
+var message = 'GoodBye';
 
-function memoize(fn) {
-    // write your solution here
-    let cache = {};
-    return (...args)=> {
-      const key = JSON.stringify(args);
-      if(key in cache){
-        console.log('cache ')
-        return cache[key];
-      }
-      else{
-        const result = fn.apply(this, args);
-        console.log('function called')
-        cache[key] = result;
-        return result;
-      }
+function saySomething(){
+    if(true){
+        var message = 'Hi there'
+        console.log(message); // hi there 
     }
+    console.log(message); //GoodBye
 }
-const memoizedSum = memoize(sum); 
-
-console.log(memoizedSum(1,2,3));
-console.log(memoizedSum(1,2,3));
-
+saySomething();
+console.log(message); //GoodBye
