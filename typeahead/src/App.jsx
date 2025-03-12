@@ -2,6 +2,11 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+// Questions I Asked or probable Questions
+
+// differnce between debounce and  throttle
+//
+
 
 function App() {
 
