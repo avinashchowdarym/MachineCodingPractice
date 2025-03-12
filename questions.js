@@ -14,4 +14,4 @@ function twosum(arr , target){
     return resarr; // O(n)
 }
 
-console.log(twosum(arr,7));
+// console.log(twosum(arr,7));
