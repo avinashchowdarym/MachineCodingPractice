@@ -15,5 +15,3 @@ function twosum(arr , target){
 }
 
 console.log(twosum(arr,7));
-
-// 1-2-3 
