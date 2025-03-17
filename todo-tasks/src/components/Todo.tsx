@@ -1,7 +1,9 @@
-import { RefObject, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { Checkbox } from '@radix-ui/react-checkbox'
+import { Calendar } from "@/components/ui/calendar"
+
 
 type Todo = {
     id: number,
@@ -16,6 +18,7 @@ const Todo = () => {
     const [todos, setTodos] = useState<Todo[]>([])
     const [completed, setCompleted] = useState<Todo[]>([]);
     const ref = useRef<HTMLInputElement>(null);
+    const [date, setDate] = useState<Date | undefined>(new Date())
 
     const handleClick = () => {
         setTodos(
@@ -33,16 +36,16 @@ const Todo = () => {
     }
 
     const handleDelete = (id: Number) => {
-        const newArr = todos.filter((task)=> task.id !== id);
+        const newArr = todos.filter((task) => task.id !== id);
         setTodos(newArr);
     }
-    
+
     const handleEdit = (id: Number) => {
-        const taskArr = todos.filter((task)=> task.id === id);
-        const updatedTodos = todos.filter((task)=> task.id !== id);
+        const taskArr = todos.filter((task) => task.id === id);
+        const updatedTodos = todos.filter((task) => task.id !== id);
         setTodos(updatedTodos);
         ref.current?.focus();
-        if(taskArr){
+        if (taskArr) {
             const task_new = taskArr[0].task;
             setTask(task_new);
         }
@@ -53,7 +56,7 @@ const Todo = () => {
     return (
         <div className='flex flex-col mt-20 w-[50%]'>
             <div className='flex flex-row gap-8'>
-                <Input autoFocus ref={ref}  placeholder='add tasks' onKeyDown={(e)=> e.key === 'Enter' ? handleClick() : ''}  value={task} onChange={(e) => setTask(e.target.value)} />
+                <Input autoFocus ref={ref} placeholder='add tasks' onKeyDown={(e) => e.key === 'Enter' ? handleClick() : ''} value={task} onChange={(e) => setTask(e.target.value)} />
                 <Button variant='outline' onClick={handleClick} disabled={task.trim().length === 0}>Add Todo</Button>
                 <Checkbox />
             </div>
@@ -73,15 +76,22 @@ const Todo = () => {
                                     </label>
                                 </div>
                                 <div className='flex gap-2'>
+                                     <Calendar
+                                        mode="single"
+                                        selected={date}
+                                        onSelect={setDate}
+                                        className="rounded-md border shadow"
+                                    />
                                     <Button className='p-2 text-green-500' variant='outline' size='icon' onClick={() => handleEdit(todo.id)}>
-                                        <img src= 'https://i.pinimg.com/736x/34/58/a1/3458a165c47ea8a8cf61496d2162dd14.jpg' />
+                                        <img src='https://i.pinimg.com/736x/34/58/a1/3458a165c47ea8a8cf61496d2162dd14.jpg' />
                                     </Button>
                                     <Button className='p-2 text-green-500' variant='outline' size='icon' onClick={() => handleDelete(todo.id)}>
-                                        <img src= 'https://cdn-icons-png.flaticon.com/512/3550/3550701.png' />
+                                        <img src='https://cdn-icons-png.flaticon.com/512/3550/3550701.png' />
                                     </Button>
                                     <Button className='p-2 text-green-500' variant='outline' size='icon' onClick={() => handleCompleted(todo.id)}>✓</Button>
+                                   
                                 </div>
-                                
+
                             </div>
                         )
                     })
