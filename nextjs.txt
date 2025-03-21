@@ -1,0 +1,27 @@
+// SEO optimisation
+
+// waterfalling problem 
+
+NextJS build on top of react becuase of some minor inconveniences from react as they are not that quick to solve issues 
+
+issues: 
+
+1. React router probably need separate backend where NextJS can maintain backend in same folder
+
+2. React does have external package for routing where NextJS provide folder structure itself as routes
+
+3. SEO - Search Engine optimisation not exactly true today but Its dom element html doex not contain whole page where JS file contains it leading to Google Search Crawler to not find results in Page ranking algorithm 
+
+4. Water falling Problem : slides : https://projects.100xdevs.com/tracks/nextjs-1/next-1
+
+Next.js provides you the following upsides over React
+1. Server side rendering - Get’s rid of SEO problems
+2. API routes - Single codebase with frontend and backend
+3. File based routing (no need for react-router-dom)
+4. Bundle size optimisations, Static site generation
+5. Maintained by the Vercel team
+
+
+Downsides - 
+1. Can’t be distributed via a CDN, always needs a server running that does server side rendering and hence is expensive
+2. Very opinionated, very hard to move out of it
