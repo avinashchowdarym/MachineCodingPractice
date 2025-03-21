@@ -1,26 +1,41 @@
-import './App.css'
-import {BrowserRouter , Routes , Route} from 'react-router-dom'
-import Layout from './components/Layout'
-import { ThemeProvider } from './components/theme-provider'
-import WeatherDashboard from './pages/weather-dashboard'
-import Cites from './pages/cites'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "./components/ui/sonner";
+import { Layout } from "./components/layout";
+import { ThemeProvider } from "./context/theme-provider";
+import { BrowserRouter } from "react-router";
+import { CityPage } from "./pages/city-page";
+import {WeatherDashboard} from "./pages/weather-dashboard";
+import { Route, Routes } from "react-router";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
-
   return (
-    <BrowserRouter>
-    <ThemeProvider defaultTheme='dark' >
-      <Layout>
-        <Routes>
-          <Route path='/' element={<WeatherDashboard/>}/>
-          <Route path='/city/:cityName' element={<Cites/>}/>
-        </Routes>
-      </Layout>
-    </ThemeProvider>
-      
-    </BrowserRouter>
-    
-  )
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <ThemeProvider defaultTheme="dark">
+          <Layout>
+            <Routes>
+              <Route path="/" element={<WeatherDashboard />} />
+              <Route path="/city/:cityName" element={<CityPage />} />
+            </Routes>
+          </Layout>
+          <Toaster richColors />
+        </ThemeProvider>
+      </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }
 
-export default App
+export default App;
