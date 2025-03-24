@@ -15,3 +15,14 @@ function twosum(arr , target){
 }
 
 // console.log(twosum(arr,7));
+
+
+function x (){
+    console.log(i);
+    setTimeout(()=>{
+        console.log(i);
+    },1000) 
+    var i =1;
+}
+
+x();
